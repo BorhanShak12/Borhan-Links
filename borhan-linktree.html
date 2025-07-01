@@ -1,0 +1,85 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Borhan's Links</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f5f7fa;
+      color: #333;
+      text-align: center;
+      padding: 50px 20px;
+    }
+
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    a.link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      text-decoration: none;
+      background: #0077b5;
+      color: white;
+      padding: 14px;
+      margin: 10px 0;
+      border-radius: 12px;
+      transition: background 0.3s ease;
+    }
+
+    a.link-btn.telegram { background: #229ED9; }
+    a.link-btn.email { background: #D44638; }
+    a.link-btn.calendly { background: #0056d2; }
+    a.link-btn.bio { background: #333; }
+
+    a.link-btn:hover {
+      opacity: 0.9;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔗 Borhan's Links</h1>
+    <a href="https://www.linkedin.com/in/yourusername" class="link-btn" target="_blank">
+      <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" class="icon">
+      LinkedIn
+    </a>
+    <a href="https://t.me/borhancuriochain" class="link-btn telegram" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram" class="icon">
+      Telegram
+    </a>
+    <a href="mailto:borhan@curiochain.com" class="link-btn email">
+      <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" class="icon">
+      Email
+    </a>
+    <a href="https://calendly.com/yourusername" class="link-btn calendly" target="_blank">
+      <img src="https://avatars.githubusercontent.com/u/15883171?s=200&v=4" alt="Calendly" class="icon">
+      Book a Call
+    </a>
+    <a href="https://yourwebsite.com/bio" class="link-btn bio" target="_blank">
+      <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Bio" class="icon">
+      Bio
+    </a>
+  </div>
+</body>
+</html>
