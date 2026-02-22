@@ -2,6 +2,8 @@ package com.borhan.currencygate
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
@@ -24,6 +26,7 @@ data class CurrencyUiState(
 class CurrencyViewModel : ViewModel() {
     private val _uiState = MutableStateFlow(CurrencyUiState())
     val uiState: StateFlow<CurrencyUiState> = _uiState
+    private var convertJob: Job? = null
 
     fun convert(amount: Double, from: String, to: String) {
         if (from.isBlank() || to.isBlank()) {
@@ -31,22 +34,22 @@ class CurrencyViewModel : ViewModel() {
             return
         }
 
-        viewModelScope.launch {
+        convertJob?.cancel()
+        convertJob = viewModelScope.launch {
             _uiState.update { it.copy(loading = true, error = null) }
-            runCatching {
-                CurrencyApiFactory.api.latest(
+            try {
+                val response = CurrencyApiFactory.api.latest(
                     amount = amount,
                     from = from,
                     to = to
                 )
-            }.onSuccess { response ->
                 val toRate = response.rates[to]
                 if (toRate == null) {
                     _uiState.value = CurrencyUiState(
                         loading = false,
                         error = "No rate received for $to"
                     )
-                    return@onSuccess
+                    return@launch
                 }
 
                 val normalizedRate = toRate / response.amount
@@ -60,10 +63,12 @@ class CurrencyViewModel : ViewModel() {
                         timestamp = response.date
                     )
                 )
-            }.onFailure {
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Exception) {
                 _uiState.value = CurrencyUiState(
                     loading = false,
-                    error = it.message ?: "Unknown API error"
+                    error = e.message ?: "Unknown API error"
                 )
             }
         }
